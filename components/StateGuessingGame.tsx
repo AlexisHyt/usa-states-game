@@ -118,9 +118,9 @@ export default function StateGuessingGame() {
     }
     
     // Check if game is completed (reached target score in all50states mode)
-    if (isCorrect && gameMode === "all50states" && score + 1 >= targetScore) {
+    if (gameMode === "all50states" && totalGuesses + 1 >= targetScore) {
       setGameCompleted(true);
-      setFeedback(prevFeedback => prevFeedback + " Congratulations! You've correctly guessed all 50 states!");
+      setFeedback(prevFeedback => prevFeedback + ` Congratulations! You've correctly guessed ${score} states!`);
     }
   };
 
@@ -205,7 +205,7 @@ export default function StateGuessingGame() {
           <div className="text-center">
             <div className="p-4 mb-4 bg-green-100 border border-green-400 text-green-700 rounded">
               <p className="font-bold mb-2">Congratulations! 🎉</p>
-              <p>You&apos;ve successfully guessed all 50 states!</p>
+              <p>{`You've successfully guessed ${score} states!`}</p>
               <p className="mt-2">Final Score: {score}/{totalGuesses}</p>
               <p className="text-sm mt-2">Accuracy: {Math.round((score / totalGuesses) * 100)}%</p>
             </div>
