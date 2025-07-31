@@ -5,6 +5,7 @@ import {State, states} from "@/data/states";
 import USAVisx from "@/components/USAVisx";
 import {StateInformation} from "@/components/StateInformation";
 import {levenshteinDistance} from "@/lib/levenshteinDistance";
+import MapModal from "@/components/MapModal";
 
 export type GameStatus = "playing" | "correct" | "incorrect";
 export type GameMode = "random" | "all50states";
@@ -20,6 +21,7 @@ export default function StateGuessingGame() {
   const [remainingStates, setRemainingStates] = useState<State[]>([]);
   const [targetScore, setTargetScore] = useState(0);
   const [gameCompleted, setGameCompleted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const initializeGame = () => {
     if (gameMode === "random" || window === undefined) {
@@ -272,7 +274,23 @@ export default function StateGuessingGame() {
       </div>
 
       {currentState && (
-        <USAVisx currentState={currentState} gameStatus={gameStatus} />
+        <div className="flex flex-col items-center">
+          <USAVisx currentState={currentState} gameStatus={gameStatus} />
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          >
+            Show Fullscreen Map
+          </button>
+          
+          <MapModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            mapType="usa"
+            currentState={currentState}
+            gameStatus={gameStatus}
+          />
+        </div>
       )}
     </div>
   );

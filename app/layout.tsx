@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "USA State Guessing Game",
-  description: "Test your knowledge of US state abbreviations with this fun guessing game!",
+  title: "Geo Guessing Game",
+  description: "Test your knowledge on various geography guessing game!",
 }
 
 export default function RootLayout({

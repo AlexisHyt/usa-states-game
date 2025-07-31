@@ -16,6 +16,7 @@ import {getStateColor, selectedColor} from "@/lib/getStateColor";
 interface Props {
   currentState: State;
   gameStatus: GameStatus;
+  fullview?: boolean;
 }
 interface FeatureShape {
   type: 'Feature';
@@ -45,7 +46,7 @@ const coordOffsets: Record<string, number[]> = {
 };
 const ignoredStates = ['VT', 'NH', 'MA', 'RI', 'CT', 'NJ', 'DE', 'MD'];
 
-export default function USAVisx({ currentState, gameStatus }: Props) {
+export default function USAVisx({ currentState, gameStatus, fullview = false }: Props) {
   const height = 600;
   const width = height * 1.55;
 
@@ -101,15 +102,27 @@ export default function USAVisx({ currentState, gameStatus }: Props) {
                   stroke={background}
                   strokeWidth={0.5}
                 />
-                {gameStatus !== 'playing' && (
-                  <text
-                    transform={`translate(${coords})`}
-                    fontSize={Math.max(width / 75, 9)}
-                    style={stylesObj}
-                    textAnchor="middle"
-                  >
-                    {abbr}
-                  </text>
+                {(gameStatus !== 'playing' || fullview) && (
+                  <>
+                    <text
+                      transform={`translate(${coords})`}
+                      fontSize={Math.max(width / 75, 9)}
+                      style={stylesObj}
+                      textAnchor="middle"
+                    >
+                      {abbr}
+                    </text>
+                    {fullview && coords && (
+                      <text
+                        transform={`translate(${coords[0]}, ${coords[1] + 14})`}
+                        fontSize={Math.max(width / 120, 7)}
+                        style={stylesObj}
+                        textAnchor="middle"
+                      >
+                        {feature.properties.name}
+                      </text>
+                    )}
+                  </>
                 )}
               </React.Fragment>
             );
